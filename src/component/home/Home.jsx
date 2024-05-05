@@ -13,25 +13,27 @@ export default function Home() {
   const [loading,setLoading]=useState(true);
   const dispatch=useDispatch();
     useEffect(()=>{
-      
+      //load data whenever we hit bottom of scrollbar
         fetchCardData(offset,setLoading);
        
       
        
     },[offset]);
     const handle =() =>{
+      //for infinite scroll
       if (
         window.innerHeight + document.documentElement.scrollTop + 1 >=
         document.documentElement.scrollHeight
       ) {
         setLoading(true);
-        dispatch(setOffset()); // Assuming setOffset is an action creator
+        dispatch(setOffset()); 
       }
     }
     useEffect(()=>{
 
-   
+   //adding event listener for scroll
    window.addEventListener("scroll",handle);
+   //clean up of event listener
    return ()=> window.removeEventListener("scroll",handle);
     },[])
     const data=useSelector((state)=>state.card.cardData);
@@ -40,6 +42,7 @@ export default function Home() {
   <>
     <Header/>
     <Box>
+    {/* cards generating here*/}
     <Grid container spacing={2}>
     {
         data.map((item)=>{
@@ -53,6 +56,7 @@ export default function Home() {
         })
     }
     </Grid>
+    {/*loader for load more data*/}
   <div>
     {
       loading ?

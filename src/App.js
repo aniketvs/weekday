@@ -5,9 +5,9 @@ import './App.css'
 function App() {
   return (
    <>
-   <Provider store={store}>
+   <Provider store={store}> {/* store is configure for redux */}
    <div className="global-container">
-   <Home/>
+   <Home/>{/* home page */}
    </div>
 </Provider>
    </>

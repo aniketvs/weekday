@@ -14,28 +14,29 @@ const cardSlice = createSlice({
   initialState: intitalState,
   reducers: {
     setOffset: (state, action) => {
-      return { ...state, offset: state.offset + 1 };
+      return { ...state, offset: state.offset + 1 };  //to change offset value
     },
     saveData: (state, action) => {
       return {
         ...state,
-        cardData: [...action.payload],
-        previousCardData: [...action.payload],
+        cardData: [...action.payload],//to store updated data
+        previousCardData: [...action.payload], //to store all data that fetch previously
       };
     },
     addData: (state, action) => {
       if (
-        state.cardData.find((item) => item.jdUid == action.payload[0].jdUid)
+        state.cardData.find((item) => item.jdUid == action.payload[0].jdUid) //to avoid duplicate value
       ) {
         return state;
       }
    
       return {
         ...state,
-        cardData: [...state.cardData, ...action.payload],
+        cardData: [...state.cardData, ...action.payload],   //add more data during infinite scroll
         previousCardData: [...state.cardData, ...action.payload],
       };
     },
+    //role,experience ,basepay,etc. options are fetch from these function
     getRole: (state, action) => {
       let s = new Set();
       state.cardData.map((item) => {
@@ -74,6 +75,7 @@ const cardSlice = createSlice({
         basePay: Array.from(s),
       };
     },
+    //filter function that return filter value
     filterCardData: (state, action) => {
       let a = new Set();
       state.filterList.map((item) => {
@@ -84,14 +86,14 @@ const cardSlice = createSlice({
       );
 
       if (existingItem) {
-        a.delete(existingItem);
+        a.delete(existingItem); //if name exist then delete it to update new value
       }
 
       a.add({ name: action.payload.name, value: action.payload.value });
       let newArr = state.previousCardData;
 
       let filterArr = Array.from(a);
-
+//to apply all filter 
       for (let c of filterArr) {
         if (c.name == "location" || c.name == "companyName") {
           newArr = newArr.filter((item) =>

@@ -23,13 +23,16 @@ const TextInputFiled=({label,fun})=>{
 }
 
 export default function Header() {
+  //builder that build option for select filed
   const optionBuilder = (value) => {
     return { label: value, value: value };
   };
+  //options of select filed
   const role=useSelector((state)=>state.card.role)
   const Remote=["remote","on-site","hybrid"];
   const basePay=useSelector((state)=>state.card.basePay);
   const experience=useSelector((state)=>state.card.experience);
+  //list to create filter
   const filterSelect =[
 
     {
